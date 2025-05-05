@@ -74,7 +74,8 @@ export default {
   },
   methods: {
     initSocket() {
-      this.socket = io('https://websocket-w9gs.onrender.com'); 
+      this.socket = io(import.meta.env.VITE_WS_URL);
+
 
       this.socket.on('chatMessage', (msg) => {
         this.messages.push(msg);
