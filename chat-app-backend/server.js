@@ -9,9 +9,11 @@ app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: '*', // Or restrict to specific domains
+    methods: ['GET', 'POST'],
   },
 });
+
 
 let users = [];
 
@@ -55,3 +57,4 @@ io.on('connection', (socket) => {
 server.listen(3000, () => {
   console.log('Server running on http://10.100.0.237:3000');
 });
+

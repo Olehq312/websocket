@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     initSocket() {
-      this.socket = io('http://10.100.0.237:3000'); // Use your local IP
+      this.socket = io('https://websocket-w9gs.onrender.com'); 
 
       this.socket.on('chatMessage', (msg) => {
         this.messages.push(msg);
