@@ -55,6 +55,6 @@ io.on('connection', (socket) => {
 });
 
 server.listen(3000, () => {
-  console.log('Server running on http://10.100.0.237:3000');
+  console.log('Server running');
 });
 
