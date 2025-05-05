@@ -1,6 +1,7 @@
 services:
-  - type: static
+  - type: web
     name: websocket-frontend
+    env: static
     envVars:
       - key: VITE_WS_URL
         value: https://websocket-w9gs.onrender.com
