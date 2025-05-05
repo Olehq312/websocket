@@ -74,7 +74,9 @@ export default {
   },
   methods: {
     initSocket() {
+      console.log('VITE_WS_URL:', import.meta.env.VITE_WS_URL); // This should show the URL
       this.socket = io(import.meta.env.VITE_WS_URL);
+
 
 
       this.socket.on('chatMessage', (msg) => {
