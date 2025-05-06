@@ -13,18 +13,15 @@
       </div>
 
       <div v-if="username" class="chat-box">
-        <div class="messages">
-          <div
+        <div
           v-for="(msg, index) in messages"
           :key="index"
           :class="['message', msg.username === username ? 'sent' : 'received']"
-          >
+        >
           <div class="message-content">
             <strong>{{ msg.username }}:</strong> {{ msg.message }}
           </div>
-        </div>
       </div>
-
         <div class="typing-indicator" v-if="typingUsers.length > 0">
           <em>{{ typingUsers.join(', ') }} {{ typingUsers.length > 1 ? 'are' : 'is' }} typing...</em>
         </div>
@@ -74,10 +71,7 @@ export default {
   },
   methods: {
     initSocket() {
-      console.log('VITE_WS_URL:', import.meta.env.VITE_WS_URL); // This should show the URL
-      this.socket = io(import.meta.env.VITE_WS_URL);
-
-
+      this.socket = io('http://10.100.0.237:3000'); // Use your local IP
 
       this.socket.on('chatMessage', (msg) => {
         this.messages.push(msg);
@@ -101,11 +95,10 @@ export default {
       });
 
       this.socket.on('typing', (username) => {
-  console.log('Received typing event from:', username);
-  if (!this.typingUsers.includes(username) && username !== this.username) {
-    this.typingUsers.push(username);
-  }
-});
+        if (!this.typingUsers.includes(username) && username !== this.username) {
+          this.typingUsers.push(username);
+        }
+      });
 
       this.socket.on('stopTyping', (username) => {
         this.typingUsers = this.typingUsers.filter(name => name !== username);
@@ -133,17 +126,15 @@ export default {
     },
 
     handleTyping() {
-  if (this.username) {
-    console.log('Typing event emitted by:', this.username);
-    this.socket.emit('typing', this.username);
-    clearTimeout(this.typingTimeout);
-    this.typingTimeout = setTimeout(() => {
-      console.log('Stop typing emitted by:', this.username);
-      this.socket.emit('stopTyping', this.username);
-    }, 1000);
-  }
-},
-}
+      if (this.username) {
+        this.socket.emit('typing', this.username);
+        clearTimeout(this.typingTimeout);
+        this.typingTimeout = setTimeout(() => {
+          this.socket.emit('stopTyping', this.username);
+        }, 1000);
+      }
+    },
+  },
 };
 </script>
 
@@ -231,7 +222,6 @@ export default {
 .message {
   display: flex;
   margin-bottom: 10px;
-  max-width: 80%;
   word-wrap: break-word;
 }
 
