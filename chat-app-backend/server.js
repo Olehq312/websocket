@@ -54,8 +54,10 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(3000, () => {
-  console.log('Server running on http://10.100.0.237:3000');
+const PORT = process.env.PORT || 3000; // Fallback to 3000 for local dev
+
+server.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });
 
 
